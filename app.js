@@ -6,7 +6,6 @@ const app=express();
 const dotenv=require("dotenv");
 dotenv.config();
 
-
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/bookStoreDB")
 .then(()=>console.log("Connected to mongodb"))
 .catch((error)=>console.log("Connection failed to mongodb\n",error));
