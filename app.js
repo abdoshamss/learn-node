@@ -3,6 +3,7 @@ const booksPath=require("./routes/books");
 const authorsPath=require("./routes/authors");
 const mongoose =require("mongoose");
 const logger=require("./middlewares/logger");
+const {errorHandler,notFound}=require("./middlewares/errors");
 const app=express();
 const dotenv=require("dotenv");
 dotenv.config();
@@ -16,6 +17,10 @@ app.use(logger);
 
 app.use("/api/books",booksPath);
 app.use("/api/authors",authorsPath);
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 const PORT =process.env.PORT || 500;
 app.listen (PORT,()=>console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`));
