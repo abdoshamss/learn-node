@@ -1,13 +1,12 @@
 const express =require("express");
 const router =express.Router();
-const Joi = require('joi');
-const asuncHandler = require('express-async-handler');
+const asyncHandler = require('express-async-handler');
 const { Author,validateCreatAuthor,validateUpdateAuthor}=require("../models/Author");
 
 
 
 
-router.get('/',asuncHandler(
+router.get('/',asyncHandler(
     async(req,res)=>{
         
           const authorsList=await Author.find().sort({name:1});
@@ -18,7 +17,7 @@ router.get('/',asuncHandler(
       }
 ));
 
-router.get('/:id',asuncHandler(async(req,res)=>{
+router.get('/:id',asyncHandler(async(req,res)=>{
     
         const author=await Author.findById(req.params.id);
         if(author){
@@ -32,7 +31,7 @@ router.get('/:id',asuncHandler(async(req,res)=>{
     }));
 
 
- router.post("/",asuncHandler(async (req,res)=>{
+ router.post("/",asyncHandler(async (req,res)=>{
     const {error}=validateCreatAuthor(req.body);
     if (error){
     return res.status(400).json(error.details[0].message);
@@ -52,7 +51,7 @@ router.get('/:id',asuncHandler(async(req,res)=>{
 
 
 
-router .put("/:id",asuncHandler(async(req,res)=>{
+router .put("/:id",asyncHandler(async(req,res)=>{
     const {error}=validateUpdateAuthor(req.body);
     if(error){
         res.status(400).json(error.details[0].message);
@@ -77,7 +76,7 @@ router .put("/:id",asuncHandler(async(req,res)=>{
 
 
 
-router.delete("/:id",asuncHandler(async(req,res)=>{
+router.delete("/:id",asyncHandler(async(req,res)=>{
      
         const author=await Author.findById( req.params.id);
     if(author){
